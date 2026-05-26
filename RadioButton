@@ -1,0 +1,71 @@
+package radiobutton;
+
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+public class RadioButton extends JFrame implements ActionListener {
+    JLabel lblQuestion = new JLabel("  DO YOU LIKE JAVA?");
+    JRadioButton radiobutton1 = new JRadioButton("YES");
+    JRadioButton radiobutton2 = new JRadioButton("NO");
+    JButton btnNext = new JButton("NEXT");
+    JLabel lblQuestion2 = new JLabel("  IS IT HARD?");
+    JRadioButton radiobutton3 = new JRadioButton("YES");
+    JRadioButton radiobutton4 = new JRadioButton("NO");
+    JButton btnNext2 = new JButton("FINISH");
+    JPanel panel1 = new JPanel(new GridLayout(4, 1));
+    JPanel panel2 = new JPanel(new GridLayout(4, 1));
+    ButtonGroup group1 = new ButtonGroup();
+    ButtonGroup group2 = new ButtonGroup();
+
+    public RadioButton() {
+        super("Survey");
+        setSize(350, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        group1.add(radiobutton1);
+        group1.add(radiobutton2);
+        panel1.add(lblQuestion);
+        panel1.add(radiobutton1);
+        panel1.add(radiobutton2);
+        panel1.add(btnNext); btnNext.addActionListener(this);
+        group2.add(radiobutton3);
+        group2.add(radiobutton4);
+        panel2.add(lblQuestion2);
+        panel2.add(radiobutton3);
+        panel2.add(radiobutton4);
+        panel2.add(btnNext2);  btnNext2.addActionListener(this);
+        add(panel1);
+    }
+
+    public static void main(String[] args) {
+        RadioButton window = new RadioButton();
+        window.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnNext) {
+            if (!radiobutton1.isSelected() && !radiobutton2.isSelected()) {
+                JOptionPane.showMessageDialog(this, "Please select an answer first!");
+                return;
+            }
+            remove(panel1);
+            add(panel2);
+            revalidate();
+            repaint();
+
+        } else if (e.getSource() == btnNext2) {
+
+            if (!radiobutton3.isSelected() && !radiobutton4.isSelected()) {
+                JOptionPane.showMessageDialog(this, "Please select an answer first!");
+                return;
+            }
+            String answer1 = radiobutton1.isSelected() ? "YES" : "NO";
+            String answer2 = radiobutton3.isSelected() ? "YES" : "NO";
+
+            JOptionPane.showMessageDialog(this,
+                    "RESULTS:\nQUESTION 1: " + answer1 + "\nQUESTION 2: " + answer2);
+        }
+    }
+}
